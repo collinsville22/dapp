@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    /* file structure */
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    /* language & runtime targets */
+    "module": "nodenext",
+    "target": "es2020",
+
+    /* build artifacts */
+    "sourceMap": true,
+    "declaration": true,
+
+    /* strictness & safety */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"]
+}

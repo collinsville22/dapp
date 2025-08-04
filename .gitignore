@@ -1,0 +1,10 @@
+# dependencies
+node_modules/
+pnpm-lock.yaml
+
+# build output
+dist/
+coverage/
+
+# docs & misc
+*.docx
