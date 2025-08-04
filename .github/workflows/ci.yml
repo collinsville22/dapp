@@ -1,21 +1,28 @@
+# .github/workflows/ci.yml
 name: build-test
+
 on: [push, pull_request]
 
 jobs:
   ci:
     runs-on: ubuntu-latest
+
     steps:
+      # 1 – checkout your repo
       - uses: actions/checkout@v4
 
+      # 2 – install Node (v20) and enable PNPM caching
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
+          cache: pnpm        # <- enables cache but still NO pnpm binary yet
 
-      - uses: pnpm/action-setup@v2      # ← installs pnpm
+      # 3 – install PNPM and run `pnpm install`
+      - uses: pnpm/action-setup@v2
         with:
-          version: 10
-          run_install: true            # automatically runs pnpm install
+          version: 10        # pick any v10+  (same as you use locally)
+          run_install: true  # automatically runs `pnpm install`
 
+      # 4 – build & test
       - run: pnpm run build
       - run: pnpm run test -- --passWithNoTests
