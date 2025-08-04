@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout dApp repository
+        uses: actions/checkout@v4
+
+      - name: Clone JuliaOS mono-repo
+        run: |
+          git clone --depth 1 https://github.com/Juliaoscode/JuliaOS.git
+
+      - name: Use Node 20 with Corepack
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install deps with pnpm
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
+
+      - name: Build TypeScript
+        run: pnpm run build
+
+      - name: Run tests
+        run: pnpm run test -- --passWithNoTests
