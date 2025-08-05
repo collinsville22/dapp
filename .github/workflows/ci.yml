@@ -14,26 +14,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1) Check out your code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js 20 & cache deps
+      # 2) Install Node.js (no cache here)
+      - name: Set up Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: pnpm
 
+      # 3) Install the pnpm CLI onto the PATH
       - name: Install pnpm CLI
         uses: pnpm/action-setup@v3
         with:
           version: latest
 
+      # 4) Install project dependencies
       - name: Install dependencies
         run: pnpm install
 
+      # 5) Build your TypeScript
       - name: Build
         run: pnpm run build
 
+      # 6) Run your tests (allow zero tests)
       - name: Run tests (allow no tests)
         run: pnpm run test -- --passWithNoTests
-
