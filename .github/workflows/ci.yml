@@ -1,4 +1,4 @@
-name: Build & Test
+ name: Build & Test
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   build-test:
+    name: build & test
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +21,7 @@ jobs:
           node-version: '20'
           cache: pnpm
 
-      - name: Setup pnpm CLI
+      - name: Install pnpm CLI
         uses: pnpm/action-setup@v3
         with:
           version: latest
@@ -33,3 +34,4 @@ jobs:
 
       - name: Run tests
         run: pnpm run test -- --passWithNoTests
+
