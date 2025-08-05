@@ -17,13 +17,18 @@ jobs:
       - name: Set up Node.js & cache pnpm
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
           cache: pnpm
 
-      - name: Prepare pnpm via Corepack
+      # Ensure pnpm is available:
+      - name: Enable Corepack & activate pnpm
         run: |
           corepack enable
           corepack prepare pnpm@latest --activate
+
+      # Fallback in case Corepack didn’t put pnpm on PATH:
+      - name: Install pnpm globally
+        run: npm install -g pnpm@latest
 
       - name: Install dependencies
         run: pnpm install
