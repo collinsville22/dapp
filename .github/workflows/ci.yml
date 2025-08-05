@@ -1,21 +1,23 @@
- name: Build & Test
+name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build-test:
-    name: build & test
+    name: Build & Test
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js (v20) & cache deps
+      - name: Set up Node.js 20 & cache deps
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -32,6 +34,6 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Run tests
+      - name: Run tests (allow no tests)
         run: pnpm run test -- --passWithNoTests
 
