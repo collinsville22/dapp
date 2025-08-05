@@ -14,21 +14,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js & cache pnpm
+      - name: Set up Node.js (v20) & cache deps
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: pnpm
 
-      # Ensure pnpm is available:
-      - name: Enable Corepack & activate pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@latest --activate
-
-      # Fallback in case Corepack didn’t put pnpm on PATH:
-      - name: Install pnpm globally
-        run: npm install -g pnpm@latest
+      - name: Setup pnpm CLI
+        uses: pnpm/action-setup@v3
+        with:
+          version: latest
 
       - name: Install dependencies
         run: pnpm install
